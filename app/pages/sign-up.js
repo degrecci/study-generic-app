@@ -4,7 +4,14 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { gql, useMutation } from '@apollo/client';
 
-import { Segment, Header, Form, Button, Grid } from 'semantic-ui-react';
+import {
+  Segment,
+  Header,
+  Form,
+  Button,
+  Message,
+  Grid,
+} from 'semantic-ui-react';
 
 export default function SignUp() {
   const { handleSubmit, register, setValue } = useForm();
@@ -20,7 +27,7 @@ export default function SignUp() {
     }
   `;
 
-  const [signup] = useMutation(SIGNUP);
+  const [signup, { loading, error }] = useMutation(SIGNUP);
 
   const onSubmit = ({ username, password }) => {
     signup({ variables: { username: username, password: password } });
@@ -44,7 +51,7 @@ export default function SignUp() {
           <Header as="h2" color="red" textAlign="center">
             Create your account
           </Header>
-          <Form size="big" onSubmit={handleSubmit(onSubmit)}>
+          <Form size="big" onSubmit={handleSubmit(onSubmit)} loading={loading}>
             <Segment>
               <Form.Input
                 fluid
@@ -67,8 +74,8 @@ export default function SignUp() {
                   setValue(name, value);
                 }}
               />
-
-              <Button color="red" fluid size="large">
+              {error && <Message negative>{error.message}</Message>}
+              <Button color="red" fluid size="large" disabled={loading}>
                 Sign Up
               </Button>
             </Segment>
