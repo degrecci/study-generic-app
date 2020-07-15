@@ -1,5 +1,6 @@
 const { GraphQLServer } = require('graphql-yoga');
 const session = require('express-session');
+const bcrypt = require('bcryptjs');
 const ms = require('ms');
 
 const typeDefs = `
@@ -13,10 +14,25 @@ const typeDefs = `
   }
 `;
 
+const data = {};
+
 const resolvers = {
   Query: {
     isLogin: (parent, args, { request }) =>
       typeof request.session.user !== 'undefined',
+  },
+  Mutation: {
+    signup: async (parent, { username, password }, context) => {
+      if (data[username]) {
+        throw new Error('Username already exists');
+      }
+
+      data[username] = {
+        password: await bcrypt.hashSync(password, 10),
+      };
+
+      return true;
+    },
   },
 };
 
@@ -27,7 +43,7 @@ const server = new GraphQLServer({ typeDefs, resolvers, context });
 server.express.use(
   session({
     name: 'qid',
-    secret: `some-random-secret-here`,
+    secret: `random-secret`,
     resave: true,
     saveUninitialized: true,
     cookie: {
