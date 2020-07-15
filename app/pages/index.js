@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import Link from 'next/link';
+
 import {
   Segment,
   Header,
@@ -47,12 +49,11 @@ export default function Home() {
               </Segment>
             </Form>
             <Message>
-              Do not have account? <a href="#">Sign Up</a>
+              Do not have account? <Link href="/sign-up">Sign Up</Link>
             </Message>
           </Grid.Column>
         </Grid>
       </main>
-      <footer></footer>
     </div>
   );
 }
