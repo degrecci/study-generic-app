@@ -27,7 +27,7 @@ export default function SignUp() {
     }
   `;
 
-  const [signup, { loading, error }] = useMutation(SIGNUP);
+  const [signup, { loading, error, data }] = useMutation(SIGNUP);
 
   const onSubmit = ({ username, password }) => {
     signup({ variables: { username: username, password: password } });
@@ -74,6 +74,14 @@ export default function SignUp() {
                   setValue(name, value);
                 }}
               />
+              {data?.signup && (
+                <Message positive>
+                  Account created.{' '}
+                  <Link href="/">
+                    <a>Log In</a>
+                  </Link>
+                </Message>
+              )}
               {error && <Message negative>{error.message}</Message>}
               <Button color="red" fluid size="large" disabled={loading}>
                 Sign Up
