@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
+import { gql, useMutation } from '@apollo/client';
 
 import { Segment, Header, Form, Button, Grid } from 'semantic-ui-react';
 
@@ -13,8 +14,16 @@ export default function SignUp() {
     register({ name: 'password' }, { required: true });
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const SIGNUP = gql`
+    mutation SignUp($username: String!, $password: String!) {
+      signup(username: $username, password: $password)
+    }
+  `;
+
+  const [signup] = useMutation(SIGNUP);
+
+  const onSubmit = ({ username, password }) => {
+    signup({ variables: { username: username, password: password } });
   };
 
   return (
