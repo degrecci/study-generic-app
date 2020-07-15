@@ -49,7 +49,10 @@ export default function Home() {
               </Segment>
             </Form>
             <Message>
-              Do not have account? <Link href="/sign-up">Sign Up</Link>
+              Do not have account?{' '}
+              <Link href="/sign-up">
+                <a>Sign Up</a>
+              </Link>
             </Message>
           </Grid.Column>
         </Grid>
