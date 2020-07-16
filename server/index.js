@@ -14,7 +14,11 @@ const typeDefs = `
   }
 `;
 
-const data = {};
+const data = {
+  degrecci: {
+    password: 'password',
+  },
+};
 
 const resolvers = {
   Query: {
@@ -26,12 +30,27 @@ const resolvers = {
       if (data[username]) {
         throw new Error('Username already exists');
       }
+      console.log(`usuário criado: ${username}`);
 
       data[username] = {
         password: await bcrypt.hashSync(password, 10),
       };
 
       return true;
+    },
+
+    login: async (parent, { username, password }, { request }) => {
+      const user = data[username];
+
+      if (user && (await bcrypt.compareSync(password, user.password))) {
+        request.session.user = {
+          ...user,
+        };
+
+        return true;
+      }
+
+      throw new Error('Wrong user or password');
     },
   },
 };
