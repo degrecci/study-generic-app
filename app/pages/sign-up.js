@@ -39,9 +39,6 @@ export default function SignUp() {
         <title>Sign Up</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Link href="/">
-        <a>{`< Voltar`}</a>
-      </Link>
       <Grid
         textAlign="center"
         style={{ height: '100vh' }}

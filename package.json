@@ -6,7 +6,10 @@
   "author": "degrecci <henrique.degrecci@upx.com>",
   "license": "MIT",
   "private": true,
-  "workspaces": ["app", "server"],
+  "workspaces": [
+    "app",
+    "server"
+  ],
   "scripts": {
     "server": "node ./server/index.js"
   }
