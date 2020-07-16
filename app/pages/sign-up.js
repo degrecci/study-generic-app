@@ -14,12 +14,14 @@ import {
 } from 'semantic-ui-react';
 
 export default function SignUp() {
-  const { handleSubmit, register, setValue } = useForm();
+  const { handleSubmit, register, setValue, reset } = useForm();
 
   useEffect(() => {
     register({ name: 'username' }, { required: true });
     register({ name: 'password' }, { required: true });
-  });
+
+    reset();
+  }, [reset]);
 
   const SIGNUP = gql`
     mutation SignUp($username: String!, $password: String!) {
@@ -29,8 +31,8 @@ export default function SignUp() {
 
   const [signup, { loading, error, data }] = useMutation(SIGNUP);
 
-  const onSubmit = ({ username, password }) => {
-    signup({ variables: { username: username, password: password } });
+  const onSubmit = async ({ username, password }) => {
+    await signup({ variables: { username: username, password: password } });
   };
 
   return (

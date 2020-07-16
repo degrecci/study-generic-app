@@ -13,12 +13,14 @@ import {
 import { gql, useMutation } from '@apollo/client';
 
 export default function Home() {
-  const { handleSubmit, register, setValue } = useForm();
+  const { handleSubmit, register, setValue, reset } = useForm();
 
   useEffect(() => {
     register({ name: 'username' }, { required: true });
     register({ name: 'password' }, { required: true });
-  });
+
+    reset();
+  }, [reset]);
 
   const LOGIN = gql`
     mutation Login($username: String!, $password: String!) {
