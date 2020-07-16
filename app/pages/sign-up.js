@@ -74,7 +74,7 @@ export default function SignUp() {
               {data?.signup && (
                 <Message positive>
                   Account created.{' '}
-                  <Link href="/">
+                  <Link href="/login">
                     <a>Log In</a>
                   </Link>
                 </Message>
